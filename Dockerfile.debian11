@@ -31,11 +31,13 @@ RUN apt-get update -y -qq && \
   gnupg2 \
   intltool \
   libacl1-dev \
+  libasio-dev \
   libblosc1 \
   libbondcpp-dev \
   libcgal-dev \
   libeigen3-dev \
   libfmt-dev \
+  libssl-dev \
   libtinyxml-dev \
   libtinyxml2-dev \
   libxml2-utils \
