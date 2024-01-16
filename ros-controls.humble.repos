@@ -1,0 +1,10 @@
+repositories:
+  ros/filters:
+    type: git
+    url: https://github.com/ros/filters.git
+    version: ros2
+  ros2-gbp/xacro:
+    type: git
+    url: https://github.com/ros2-gbp/xacro-release.git
+    version: debian/humble/bullseye/xacro
+    

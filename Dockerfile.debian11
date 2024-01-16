@@ -1,0 +1,133 @@
+ARG from=debian:11-slim
+
+FROM ${from}
+
+ARG CMAKE_INSTALL_PREFIX=/usr/local
+ARG NUM_THREADS=8
+
+# Avoid warnings by switching to noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update all packages
+RUN apt-get update && apt-get -y dist-upgrade \
+  && \
+  : "remove cache" && \
+  rm -rf /var/lib/apt/lists/*
+
+# install system dependencies
+RUN apt-get update -y -qq && \
+  : "system dependencies" && \
+  apt-get install -y -qq \
+  \
+  aptitude \
+  autoconf \
+  automake \
+  build-essential \
+  cmake \
+  curl \
+  dnsutils \
+  git \
+  gnupg2 \
+  intltool \
+  iputils-ping \
+  libblosc1 \
+  libbondcpp-dev \
+  libcgal-dev \
+  lsb-release \
+  mlocate \
+  npm \
+  pkg-config \
+  python3-pip \
+  software-properties-common \
+  tar \
+  unzip \
+  wget \
+  xterm \
+  && \
+  : "remove cache" && \
+  rm -rf /var/lib/apt/lists/*
+
+# add the ROS 2 GPG key with apt and setup sources.list
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
+  sh -c 'echo "deb [arch=amd64,arm64] http://repo.ros2.org/ubuntu/main `lsb_release -cs` main" > /etc/apt/sources.list.d/ros2-latest.list' && \
+  curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
+
+# setup environment
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+ARG ROS_DISTRO
+# Environment variables defined using the ENV instruction always override an ARG instruction of the same name. 
+ENV ROS_DISTRO=${ROS_DISTRO:-rolling}
+
+# ros-base include begin
+# https://github.com/osrf/docker_images/blob/master/ros/galactic/ubuntu/focal/ros-core/Dockerfile
+# https://github.com/osrf/docker_images/blob/master/ros/iron/ubuntu/jammy/ros-base/Dockerfile
+
+# install bootstrap tools
+
+# there is a broken package python3-colcon-notification, lets install the fix first and then install python3-colcon-common-extensions 
+# https://github.com/colcon/colcon-notification/issues/63#issuecomment-1823763950
+#TODO(christophfroehlich): remove this fix when the package is fixed
+COPY install_colcon_fix.sh /tmp/
+RUN apt-get update && \
+  . /tmp/install_colcon_fix.sh && \
+  apt-get install --no-install-recommends -y python3-colcon-common-extensions \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install --no-install-recommends -y \
+  # python3-colcon-common-extensions \ # there is a broken package python3-colcon-notification, use fix from above or install the others manually from next line
+  # python3-colcon-cmake python3-colcon-core python3-colcon-defaults python3-colcon-devtools python3-colcon-library-path python3-colcon-metadata python3-colcon-output python3-colcon-package-information python3-colcon-package-selection python3-colcon-parallel-executor python3-colcon-powershell python3-colcon-python-setup-py python3-colcon-recursive-crawl python3-colcon-ros python3-colcon-test-result python3-colcon-argcomplete python3-colcon-bash python3-colcon-cd python3-colcon-override-check \
+  python3-colcon-mixin \
+  python3-rosdep \
+  python3-vcstool \
+  && \
+  : "remove cache" && \
+  rm -rf /var/lib/apt/lists/*
+
+# bootstrap rosdep
+RUN rosdep init && \
+  rosdep update --rosdistro $ROS_DISTRO
+
+# install dependencies via apt
+ENV DEBCONF_NOWARNINGS yes
+
+# install and activate ccache, lld, cppcheck
+RUN \
+  : "install ccache" \
+  && apt-get update -y -qq \
+  && apt-get -y install --no-install-recommends ccache lld cppcheck \ 
+  && /usr/sbin/update-ccache-symlinks \
+  && \
+  : "remove cache" && \
+  rm -rf /var/lib/apt/lists/*
+
+# install new cmake, needed for generate_parameter_library
+WORKDIR $CMAKE_WS
+RUN \
+  : "install cmake" \
+  cd /opt/ && \
+  git clone --depth 1 --branch v3.23.5 https://github.com/Kitware/CMake.git && \
+  cd CMake && \
+  ./bootstrap && make && sudo make install
+
+# ---- ROS ----
+# clone source, ROS core
+ENV ROS2_WS /opt/ros2_ws
+RUN mkdir -p $ROS2_WS/src
+WORKDIR $ROS2_WS
+ADD ros-controls.$ROS_DISTRO.repos .
+RUN vcs import --input https://raw.githubusercontent.com/ros2/ros2/$ROS_DISTRO/ros2.repos src &&\
+  vcs import src < ros-controls.$ROS_DISTRO.repos
+# build source, ROS core
+RUN colcon \
+    build \
+    --mixin release build-testing-off \
+    --cmake-args --no-warn-unused-cli \
+    --packages-up-to robot_state_publisher tf2_ros yaml_cpp_vendor tf2_geometry_msgs filters \
+      ros2param ros2interface ros2topic ros2action ros2lifecycle ros2launch xacro && \
+    rm -rf log
+
+# set up sourcing of ros
+COPY ./ros_entrypoint.sh /
+ENTRYPOINT [ "/ros_entrypoint.sh" ]
+CMD ["bash"]
