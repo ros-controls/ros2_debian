@@ -37,6 +37,7 @@ RUN apt-get update -y -qq && \
   libcgal-dev \
   libeigen3-dev \
   libfmt-dev \
+  liblttng-ust-dev lttng-tools python3-lttng \
   libssl-dev \
   libtinyxml-dev \
   libtinyxml2-dev \
