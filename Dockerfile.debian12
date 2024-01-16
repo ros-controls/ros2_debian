@@ -18,6 +18,7 @@ RUN apt-get update -y -qq && \
   : "system dependencies" && \
   apt-get install -y -qq \
   \
+  acl \
   aptitude \
   autoconf \
   automake \
@@ -28,20 +29,26 @@ RUN apt-get update -y -qq && \
   git \
   gnupg2 \
   intltool \
-  iputils-ping \
+  libacl1-dev \
   libblosc1 \
   libbondcpp-dev \
   libcgal-dev \
+  libeigen3-dev \
+  libfmt-dev \
+  libtinyxml-dev \
+  libtinyxml2-dev \
+  libxml2-utils \
   lsb-release \
   mlocate \
-  npm \
   pkg-config \
+  python3-jinja2 \
+  python3-lxml \
   python3-pip \
+  python3-typeguard \
   software-properties-common \
   tar \
   unzip \
   wget \
-  xterm \
   && \
   : "remove cache" && \
   rm -rf /var/lib/apt/lists/*
