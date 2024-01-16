@@ -46,14 +46,6 @@ RUN apt-get update -y -qq && \
   : "remove cache" && \
   rm -rf /var/lib/apt/lists/*
 
-# install project dependencies
-COPY install_deps.sh /tmp/
-RUN apt-get update && \
-  . /tmp/install_deps.sh \
-  && \
-  : "remove cache" && \
-  rm -rf /var/lib/apt/lists/*
-
 # add the ROS 2 GPG key with apt and setup sources.list
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
   sh -c 'echo "deb [arch=amd64,arm64] http://repo.ros2.org/ubuntu/main `lsb_release -cs` main" > /etc/apt/sources.list.d/ros2-latest.list' && \

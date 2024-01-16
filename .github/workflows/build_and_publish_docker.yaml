@@ -26,7 +26,7 @@ jobs:
       - uses: docker/build-push-action@v3
         with:
           push: true
-          file: Dockerfile.debian12
+          file: Dockerfile.debian11
           tags: ghcr.io/${{ github.repository_owner }}/ros:${{ matrix.ros_distro }}-debian
           build-args: |
             ROS_DISTRO=${{ matrix.ros_distro }}
@@ -49,7 +49,7 @@ jobs:
       - uses: docker/build-push-action@v3
         with:
           push: true
-          file: Dockerfile.debian11
+          file: Dockerfile.debian12
           tags: ghcr.io/${{ github.repository_owner }}/ros:${{ matrix.ros_distro }}-debian
           build-args: |
             ROS_DISTRO=${{ matrix.ros_distro }}
