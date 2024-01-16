@@ -110,14 +110,6 @@ RUN colcon \
     build \
     --mixin release build-testing-off \
     --cmake-args --no-warn-unused-cli \
-    --packages-up-to robot_state_publisher tf2_ros yaml_cpp_vendor tf2_geometry_msgs image_transport_plugins filters \
-      ros2doctor ros2param ros2interface ros2topic ros2action ros2lifecycle ros2launch xacro && \
-    rm -rf log
-# build source, ROS core
-RUN colcon \
-    build \
-    --mixin release build-testing-off \
-    --cmake-args --no-warn-unused-cli \
     --packages-up-to robot_state_publisher tf2_ros yaml_cpp_vendor tf2_geometry_msgs filters \
       ros2param ros2interface ros2topic ros2action ros2lifecycle ros2launch xacro && \
     rm -rf log
