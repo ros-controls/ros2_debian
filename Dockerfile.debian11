@@ -93,7 +93,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   python3-colcon-mixin \
   python3-rosdep \
   python3-vcstool \
-  python3-ament-pep257 \
+  python3-pydocstyle \
   python3-flake8 \
   && \
   : "remove cache" && \
