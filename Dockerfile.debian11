@@ -51,6 +51,7 @@ RUN apt-get update -y -qq && \
   python3-numpy \
   python3-pip \
   python3-psutil \
+  python3-pygraphviz \
   python3-typeguard \
   software-properties-common \
   tar \
