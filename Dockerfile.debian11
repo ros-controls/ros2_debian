@@ -125,15 +125,6 @@ RUN \
   : "remove cache" && \
   rm -rf /var/lib/apt/lists/*
 
-# install new cmake, needed for generate_parameter_library
-WORKDIR $CMAKE_WS
-RUN \
-  : "install cmake" \
-  cd /opt/ && \
-  git clone --depth 1 --branch v3.23.5 https://github.com/Kitware/CMake.git && \
-  cd CMake && \
-  ./bootstrap && make && sudo make install
-
 # ---- ROS ----
 # clone source, ROS core
 ENV ROS2_WS /opt/ros2_ws
