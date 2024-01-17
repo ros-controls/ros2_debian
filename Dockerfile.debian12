@@ -46,6 +46,7 @@ RUN apt-get update -y -qq && \
   pkg-config \
   python3-jinja2 \
   python3-lxml \
+  python3-numpy \
   python3-pip \
   python3-typeguard \
   software-properties-common \
