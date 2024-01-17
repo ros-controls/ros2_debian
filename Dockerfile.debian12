@@ -49,6 +49,7 @@ RUN apt-get update -y -qq && \
   python3-lark \
   python3-numpy \
   python3-pip \
+  python3-psutil \
   python3-typeguard \
   software-properties-common \
   tar \
@@ -80,6 +81,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   python3-colcon-mixin \
   python3-rosdep \
   python3-vcstool \
+  python3-ament-pep257 \
+  python3-flake8 \
   && \
   : "remove cache" && \
   rm -rf /var/lib/apt/lists/*
