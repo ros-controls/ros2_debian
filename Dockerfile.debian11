@@ -46,6 +46,7 @@ RUN apt-get update -y -qq && \
   mlocate \
   pkg-config \
   python3-jinja2 \
+  python3-lark \
   python3-lxml \
   python3-numpy \
   python3-pip \
