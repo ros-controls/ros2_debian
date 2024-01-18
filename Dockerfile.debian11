@@ -48,6 +48,7 @@ RUN apt-get update -y -qq && \
   python3-jinja2 \
   python3-lark \
   python3-lxml \
+  python3-netifaces \
   python3-numpy \
   python3-pip \
   python3-psutil \
