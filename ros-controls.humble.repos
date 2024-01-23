@@ -15,3 +15,15 @@ repositories:
     type: git
     url: https://github.com/ros2-gbp/backward_ros-release.git
     version:  debian/humble/bullseye/backward_ros
+  cpp_polyfills:
+    type: git
+    url: https://github.com/PickNikRobotics/cpp_polyfills.git
+    version:  main
+  RSL:
+    type: git
+    url: https://github.com/PickNikRobotics/RSL.git
+    version:  main
+  generate_parameter_library:
+    type: git
+    url: https://github.com/PickNikRobotics/generate_parameter_library.git
+    version:  main
