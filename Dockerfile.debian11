@@ -127,13 +127,12 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 
 # install new cmake, needed for generate_parameter_library
-WORKDIR $CMAKE_WS
 RUN \
-  : "install cmake" \
-  cd /opt/ && \
-  git clone --depth 1 --branch v3.23.5 https://github.com/Kitware/CMake.git && \
-  cd CMake && \
-  ./bootstrap && make && sudo make install
+  cd && \
+  wget https://github.com/Kitware/CMake/releases/download/v3.23.5/cmake-3.23.5-linux-x86_64.tar.gz && \
+  cd /usr && \
+  tar --strip-components=1 -xzf ~/cmake-3.23.5-linux-x86_64.tar.gz  && \
+  rm ~/cmake-3.23.5-linux-x86_64.tar.gz
 
 # ---- ROS ----
 # clone source, ROS core
