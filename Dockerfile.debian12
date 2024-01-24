@@ -127,7 +127,7 @@ RUN colcon \
     --mixin release build-testing-off \
     --cmake-args --no-warn-unused-cli \
     --packages-up-to robot_state_publisher tf2_ros tf2_eigen_kdl yaml_cpp_vendor tf2_geometry_msgs filters \
-      ros2param ros2interface ros2topic ros2action ros2lifecycle ros2launch ros2run \
+      ros2param ros2interface ros2topic ros2action ros2lifecycle ros2launch ros2run angles \
       xacro trajectory_msgs diagnostic_updater backward_ros generate_parameter_library && \
     rm -rf log src build
 
