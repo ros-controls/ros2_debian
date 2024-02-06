@@ -85,6 +85,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   python3-ament-pep257 \
   python3-flake8 \
   && \
+# colcon-devtools>0.2.3 is not released for debian12, so override it from pip
+  apt-get remove -y python3-colcon-devtools && \
+  pip3 install colcon-devtools --break-system-package && \
   : "remove cache" && \
   rm -rf /var/lib/apt/lists/*
 
