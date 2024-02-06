@@ -132,6 +132,9 @@ RUN colcon \
       ackermann_msgs trajectory_msgs tf2_msgs tf2_geometry_msgs sensor_msgs geometry_msgs nav_msgs && \
     rm -rf log src build
 
+# add default.yaml to the image
+ADD defaults.yaml /root/.colcon/defaults.yaml
+
 # set up sourcing of ros
 COPY ./ros_entrypoint.sh /
 ENTRYPOINT [ "/ros_entrypoint.sh" ]
