@@ -79,19 +79,8 @@ ENV ROS_DISTRO=${ROS_DISTRO:-rolling}
 # https://github.com/osrf/docker_images/blob/master/ros/iron/ubuntu/jammy/ros-base/Dockerfile
 
 # install bootstrap tools
-
-# there is a broken package python3-colcon-notification, lets install the fix first and then install python3-colcon-common-extensions 
-# https://github.com/colcon/colcon-notification/issues/63#issuecomment-1823763950
-#TODO(christophfroehlich): remove this fix when the package is fixed
-COPY install_colcon_fix.sh /tmp/
-RUN apt-get update && \
-  . /tmp/install_colcon_fix.sh && \
-  apt-get install --no-install-recommends -y python3-colcon-common-extensions \
-  && rm -rf /var/lib/apt/lists/*
-
 RUN apt-get update && apt-get install --no-install-recommends -y \
-  # python3-colcon-common-extensions \ # there is a broken package python3-colcon-notification, use fix from above or install the others manually from next line
-  # python3-colcon-cmake python3-colcon-core python3-colcon-defaults python3-colcon-devtools python3-colcon-library-path python3-colcon-metadata python3-colcon-output python3-colcon-package-information python3-colcon-package-selection python3-colcon-parallel-executor python3-colcon-powershell python3-colcon-python-setup-py python3-colcon-recursive-crawl python3-colcon-ros python3-colcon-test-result python3-colcon-argcomplete python3-colcon-bash python3-colcon-cd python3-colcon-override-check \
+  python3-colcon-common-extensions \
   python3-colcon-mixin \
   python3-rosdep \
   python3-vcstool \
