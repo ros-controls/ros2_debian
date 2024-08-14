@@ -86,6 +86,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   python3-vcstool \
   python3-pydocstyle \
   python3-flake8 \
+  python3-coverage \
   && \
   : "remove cache" && \
   rm -rf /var/lib/apt/lists/*
