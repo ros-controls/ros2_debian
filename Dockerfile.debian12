@@ -66,8 +66,8 @@ RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o 
   curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
 
 # setup environment
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 ARG ROS_DISTRO
 # Environment variables defined using the ENV instruction always override an ARG instruction of the same name. 
 ENV ROS_DISTRO=${ROS_DISTRO:-iron}
@@ -105,7 +105,7 @@ RUN colcon mixin add default \
   colcon metadata update
 
 # install dependencies via apt
-ENV DEBCONF_NOWARNINGS yes
+ENV DEBCONF_NOWARNINGS=yes
 
 # install and activate ccache, lld, cppcheck
 RUN \
@@ -119,7 +119,7 @@ RUN \
 
 # ---- ROS ----
 # clone source, ROS core
-ENV ROS2_WS /opt/ros2_ws
+ENV ROS2_WS=/opt/ros2_ws
 RUN mkdir -p $ROS2_WS/src
 WORKDIR $ROS2_WS
 ADD ros-controls.$ROS_DISTRO.repos .
