@@ -132,7 +132,7 @@ RUN colcon \
     --cmake-args --no-warn-unused-cli \
     --packages-up-to robot_state_publisher tf2_ros tf2_eigen tf2_kdl tf2_eigen_kdl yaml_cpp_vendor filters \
       ros2param ros2interface ros2topic ros2action ros2lifecycle ros2launch ros2run \
-      xacro diagnostic_updater backward_ros generate_parameter_library angles \
+      xacro diagnostic_updater backward_ros generate_parameter_library angles example_interfaces \
       ackermann_msgs trajectory_msgs tf2_msgs tf2_geometry_msgs sensor_msgs geometry_msgs nav_msgs && \
     rm -rf log src build
 
