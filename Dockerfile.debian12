@@ -33,6 +33,7 @@ RUN apt-get update -y -qq && \
   libasio-dev \
   libblosc1 \
   libbondcpp-dev \
+  libcap-dev \
   libcgal-dev \
   libeigen3-dev \
   libfmt-dev \
