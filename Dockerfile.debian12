@@ -87,9 +87,10 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   python3-flake8 \
   python3-coverage \
   && \
-# colcon-devtools>0.2.3 is not released for debian12, so override it from pip
+  # colcon-devtools>0.2.3 is not released for debian12, so override it with pip
+  # typing_extensions needs to be >4.7.0, but is available on apt with 4.4.0 only
   apt-get remove -y python3-colcon-devtools && \
-  pip3 install colcon-devtools --break-system-package && \
+  pip3 install colcon-devtools typing_extensions --break-system-package && \
   : "remove cache" && \
   rm -rf /var/lib/apt/lists/*
 
