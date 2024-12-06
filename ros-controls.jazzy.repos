@@ -47,3 +47,7 @@ repositories:
     type: git
     url: https://github.com/gazebo-release/gz_tools_vendor.git
     version: jazzy
+  pal_statistics:
+    type: git
+    url: https://github.com/pal-robotics/pal_statistics.git
+    version: humble-devel
