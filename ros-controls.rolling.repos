@@ -51,3 +51,7 @@ repositories:
     type: git
     url: https://github.com/pal-robotics/pal_statistics.git
     version: humble-devel
+  eProsima/Fast-DDS:
+    type: git
+    url: https://github.com/christophfroehlich/Fast-DDS.git
+    version: v3.1.0
