@@ -125,8 +125,7 @@ ENV ROS2_WS=/opt/ros2_ws
 RUN mkdir -p $ROS2_WS/src
 WORKDIR $ROS2_WS
 ADD ros-controls.$ROS_DISTRO.repos .
-RUN vcs import --input https://raw.githubusercontent.com/ros2/ros2/$ROS_DISTRO/ros2.repos src && \
-  rm -rf src/eProsima/Fast-DDS && \
+RUN vcs import --input https://raw.githubusercontent.com/ros2/ros2/$ROS_DISTRO/ros2.repos src &&\
   vcs import src < ros-controls.$ROS_DISTRO.repos
 # build source, ROS core
 RUN colcon \
