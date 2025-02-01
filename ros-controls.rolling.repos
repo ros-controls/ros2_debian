@@ -51,7 +51,6 @@ repositories:
     type: git
     url: https://github.com/pal-robotics/pal_statistics.git
     version: humble-devel
-  # override until https://github.com/eProsima/Fast-DDS/issues/5277 is fixed
   eProsima/Fast-DDS:
     type: git
     url: https://github.com/christophfroehlich/Fast-DDS.git
